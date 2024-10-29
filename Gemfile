@@ -9,6 +9,8 @@ gem 'devise_token_auth', '>= 1.2.0', git: "https://github.com/lynndylanhurley/de
 gem 'pg_search'
 gem 'will_paginate'
 gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem 'rqrcode'
+gem "aws-sdk-s3", require: false
 
 gem "bootsnap", require: false
 

@@ -3,13 +3,17 @@ class Project < ApplicationRecord
 
   has_many :parts, dependent: :destroy
 
-  def as_json(complete_data=false, options = {})
+  def as_json(complete_data = false, options = {})
     if complete_data
       super(
         options.merge(
           include: {
             parts: {
-              include: :sub_parts
+              include: {
+                sub_parts: {
+                  methods: :qrcode_url
+                }
+              }
             }
           }
         )
