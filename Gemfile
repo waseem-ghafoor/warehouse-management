@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 7.2.1"
+gem "rails", "~> 7.2.2"
 gem "puma", ">= 5.0"
 gem "pg", "~> 1.1"
 gem 'dotenv-rails'
