@@ -20,6 +20,10 @@ Rails.application.routes.draw do
           end
         end
       end
+
+      resources :sub_parts do
+        resources :sub_part_histories, only: [:index]
+      end
     end
   end
 end

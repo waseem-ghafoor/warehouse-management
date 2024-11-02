@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :sub_parts, dependent: :destroy
+  has_many :sub_part_histories, class_name: "SubPartHistory", foreign_key: "qc_user_id", dependent: :destroy
 
   validates :email, presence: true, uniqueness: true, format: { with: Devise.email_regexp }
   validates :name, presence: true

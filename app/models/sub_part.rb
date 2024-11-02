@@ -1,6 +1,7 @@
 class SubPart < ApplicationRecord
 
   has_one_attached :qrcode, dependent: :destroy
+  has_many :sub_part_histories, dependent: :destroy
   belongs_to :design
   belongs_to :part
   belongs_to :worker, class_name: "User", foreign_key: "worker_id"
@@ -13,7 +14,7 @@ class SubPart < ApplicationRecord
     fit_up: 2,
     welding: 3,
     blasting: 4,
-    galvanzing: 5,
+    galvanizing: 5,
     painting: 6,
     shipping: 7
   }

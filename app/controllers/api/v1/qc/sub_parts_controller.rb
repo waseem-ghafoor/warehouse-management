@@ -3,7 +3,7 @@ class Api::V1::Qc::SubPartsController < Api::V1::Qc::BaseController
 
   def change_stage
     if @sub_part.status == "completed"
-      @sub_part.quality_control = stage_secure_params[:quality_status]
+      @sub_part.quality_control = "qc_pending" if stage_secure_params[:quality_status] == 'approved'
       @sub_part.stage = stage_secure_params[:next_stage] if stage_secure_params[:next_stage].present? && stage_secure_params[:quality_status] == "approved"
       @sub_part.status = "not_started" if stage_secure_params[:quality_status].present? && stage_secure_params[:quality_status] == "approved"
     else
@@ -11,6 +11,12 @@ class Api::V1::Qc::SubPartsController < Api::V1::Qc::BaseController
     end
 
     if @sub_part.save
+      SubPartHistory.create(
+        sub_part_id: @sub_part.id,
+        qc_stage: @sub_part.stage,
+        qc_status: @sub_part.quality_control,
+        qc_user_id: current_user.id
+      )
       render json: { success: true, notice: 'Status updated successfully', data: @sub_part.as_json }, status: :ok
     else
       render json: { success: false, notice: 'Error updating status.', errors: ['Status already marked completed'] }, status: :not_found and return

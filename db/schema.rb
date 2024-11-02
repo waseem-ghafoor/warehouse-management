@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_02_163325) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_02_173548) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,6 +66,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_02_163325) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "sub_part_histories", force: :cascade do |t|
+    t.bigint "sub_part_id", null: false
+    t.integer "qc_stage"
+    t.integer "qc_status"
+    t.string "qc_note"
+    t.bigint "qc_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["qc_user_id"], name: "index_sub_part_histories_on_qc_user_id"
+    t.index ["sub_part_id"], name: "index_sub_part_histories_on_sub_part_id"
   end
 
   create_table "sub_parts", force: :cascade do |t|
@@ -126,6 +138,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_02_163325) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "designs", "projects"
   add_foreign_key "parts", "projects"
+  add_foreign_key "sub_part_histories", "sub_parts"
+  add_foreign_key "sub_part_histories", "users", column: "qc_user_id"
   add_foreign_key "sub_parts", "designs"
   add_foreign_key "sub_parts", "parts"
   add_foreign_key "sub_parts", "projects"

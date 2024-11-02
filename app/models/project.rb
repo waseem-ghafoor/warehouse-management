@@ -3,6 +3,7 @@ class Project < ApplicationRecord
 
   has_many :designs, dependent: :destroy
   has_many :parts, dependent: :destroy
+  has_many :sub_parts, dependent: :destroy
 
   def as_json(complete_data = false, options = {})
     if complete_data

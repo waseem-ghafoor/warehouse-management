@@ -1,7 +1,7 @@
 module Api::V1::Qc
   class BaseController < ApplicationController
     before_action :authenticate_user!
-    before_action :authorize_roles!
+    # before_action :authorize_roles!
     include Api::Pagination
 
 
