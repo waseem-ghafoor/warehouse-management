@@ -5,6 +5,8 @@ class SubPart < ApplicationRecord
   belongs_to :part
   belongs_to :worker, class_name: "User", foreign_key: "worker_id"
 
+  scope :by_status, -> (status){where(status: status)}
+
   enum :stage, {
     cutting: 0,
     fabrication: 1,
