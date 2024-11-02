@@ -19,6 +19,7 @@ class Projects::PartsImporter
       @rows.each_with_index do |row, index|
         begin
           part = Part.find_or_initialize_by(part_number: row['Part No'], project_id: @project.id)
+          design_part = Design.find_or_create_by(design_id: row['Design ID'], project_id: @project.id)
           part.material = row['Material ID']
           if part.save
             sub_part = part.sub_parts.find_or_initialize_by(sub_part_no: row['Sub Part NO'], part_id: part.id)
@@ -38,6 +39,7 @@ class Projects::PartsImporter
             sub_part.quality_control = map_quality_control(row['Quality Control'])
             sub_part.note = row['Note']
             sub_part.worker_id = assign_worker row
+            sub_part.design_id = design_part.id
 
             if sub_part.save
               @success_import += 1

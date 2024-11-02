@@ -15,6 +15,6 @@ class User < ActiveRecord::Base
   enum :role, { 
     admin: 0,
     worker: 1,
-    qc: 1
+    qc: 2
   }
 end
