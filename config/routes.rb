@@ -13,7 +13,13 @@ Rails.application.routes.draw do
         put 'part/change_stage/:id', to: 'sub_parts#change_stage'
       end
 
-      resources :projects
+      resources :projects do
+        resources :sub_parts do
+          collection do
+            get :stats
+          end
+        end
+      end
     end
   end
 end

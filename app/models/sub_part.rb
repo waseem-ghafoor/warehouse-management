@@ -7,10 +7,13 @@ class SubPart < ApplicationRecord
 
   enum :stage, {
     cutting: 0,
-    welding: 1,
-    fabrication: 2,
-    blasting: 3,
-    painting: 4
+    fabrication: 1,
+    fit_up: 2,
+    welding: 3,
+    blasting: 4,
+    galvanzing: 5,
+    painting: 6,
+    shipping: 7
   }
 
   enum :status, {
