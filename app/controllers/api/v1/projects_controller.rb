@@ -2,7 +2,8 @@ class Api::V1::ProjectsController < Api::V1::BaseController
   before_action :project_load, only: %i[show]
 
   def index 
-    @projects = Project.all
+    @projects = Project.all.order(created_at: :desc)
+    
     @projects = @projects.paginate page: page, per_page: per_page
     render json: { success: true, message: 'List of All Projects', data: @projects.as_json, meta_attributes: meta_attributes(@projects) },
            status: :ok

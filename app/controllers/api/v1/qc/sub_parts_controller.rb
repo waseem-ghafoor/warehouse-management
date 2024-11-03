@@ -14,7 +14,7 @@ class Api::V1::Qc::SubPartsController < Api::V1::Qc::BaseController
       SubPartHistory.create(
         sub_part_id: @sub_part.id,
         qc_stage: @sub_part.stage,
-        qc_status: @sub_part.quality_control,
+        qc_status: stage_secure_params[:quality_status],
         qc_user_id: current_user.id
       )
       render json: { success: true, notice: 'Status updated successfully', data: @sub_part.as_json }, status: :ok

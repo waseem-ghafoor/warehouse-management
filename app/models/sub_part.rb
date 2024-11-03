@@ -38,12 +38,17 @@ class SubPart < ApplicationRecord
 
 
   def as_json (opt={})
-    super().merge(qrcode_url)
+    super().merge(qrcode_url).merge(worker_name)
   end
   
   def qrcode_url
     {
       "qrcode" => qrcode&.url
+    }
+  end
+  def worker_name
+    {
+      "worker_name" => worker.name
     }
   end
   private

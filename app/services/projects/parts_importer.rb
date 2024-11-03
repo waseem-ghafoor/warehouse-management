@@ -41,6 +41,7 @@ class Projects::PartsImporter
             sub_part.worker_id = assign_worker row
             sub_part.design_id = design_part.id
             sub_part.part_number = row['Part No']
+            sub_part.project_id = @project.id
 
             if sub_part.save
               @success_import += 1
