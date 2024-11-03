@@ -16,7 +16,11 @@ class Api::V1::Qc::SubPartsController < Api::V1::Qc::BaseController
         sub_part_id: @sub_part.id,
         qc_stage: current_stage,
         qc_status: stage_secure_params[:quality_status],
-        qc_user_id: current_user.id
+        qc_user_id: current_user.id,
+        worker_id: @sub_part.worker_id,
+        start_time: @sub_part.start_time,
+        end_time: @sub_part.stop_time,
+        time_taken: @sub_part.time_taken
       )
       render json: { success: true, notice: 'Status updated successfully', data: @sub_part.as_json }, status: :ok
     else

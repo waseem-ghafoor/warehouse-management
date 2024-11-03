@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_02_173548) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_03_104526) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -76,8 +76,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_02_173548) do
     t.bigint "qc_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "worker_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer "time_taken"
     t.index ["qc_user_id"], name: "index_sub_part_histories_on_qc_user_id"
     t.index ["sub_part_id"], name: "index_sub_part_histories_on_sub_part_id"
+    t.index ["worker_id"], name: "index_sub_part_histories_on_worker_id"
   end
 
   create_table "sub_parts", force: :cascade do |t|
@@ -140,6 +145,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_02_173548) do
   add_foreign_key "parts", "projects"
   add_foreign_key "sub_part_histories", "sub_parts"
   add_foreign_key "sub_part_histories", "users", column: "qc_user_id"
+  add_foreign_key "sub_part_histories", "users", column: "worker_id"
   add_foreign_key "sub_parts", "designs"
   add_foreign_key "sub_parts", "parts"
   add_foreign_key "sub_parts", "projects"
