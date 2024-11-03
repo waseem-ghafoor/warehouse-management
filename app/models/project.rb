@@ -15,7 +15,7 @@ class Project < ApplicationRecord
             parts: {
               include: {
                 sub_parts: {
-                  methods: :qrcode_url
+                  methods: %i[qrcode_url worker_name]
                 }
               }
             }

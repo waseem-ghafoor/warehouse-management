@@ -13,6 +13,12 @@ class Api::V1::SubPartsController < Api::V1::BaseController
            status: :ok
   end
 
+  def show
+    @sub_part = SubPart.find(params[:id])
+    render json: { success: true, message: 'Show sub parts', data: @sub_part.as_json},
+           status: :ok
+  end
+
   def stats 
     @sub_parts = SubPart.all
     @sub_parts = @sub_parts.where(project_id: params[:project_id]) if params[:project_id]

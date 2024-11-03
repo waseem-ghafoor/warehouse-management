@@ -2,6 +2,7 @@ class Api::V1::Qc::SubPartsController < Api::V1::Qc::BaseController
   before_action :sub_part_load, only: %i[change_stage]
 
   def change_stage
+    current_stage = @sub_part.stage
     if @sub_part.status == "completed"
       @sub_part.quality_control = "qc_pending" if stage_secure_params[:quality_status] == 'approved'
       @sub_part.stage = stage_secure_params[:next_stage] if stage_secure_params[:next_stage].present? && stage_secure_params[:quality_status] == "approved"
@@ -13,7 +14,7 @@ class Api::V1::Qc::SubPartsController < Api::V1::Qc::BaseController
     if @sub_part.save
       SubPartHistory.create(
         sub_part_id: @sub_part.id,
-        qc_stage: @sub_part.stage,
+        qc_stage: current_stage,
         qc_status: stage_secure_params[:quality_status],
         qc_user_id: current_user.id
       )
