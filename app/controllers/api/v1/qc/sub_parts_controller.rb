@@ -4,9 +4,16 @@ class Api::V1::Qc::SubPartsController < Api::V1::Qc::BaseController
   def change_stage
     current_stage = @sub_part.stage
     if @sub_part.status == "completed"
-      @sub_part.quality_control = "qc_pending" if stage_secure_params[:quality_status] == 'approved'
-      @sub_part.stage = stage_secure_params[:next_stage] if stage_secure_params[:next_stage].present? && stage_secure_params[:quality_status] == "approved"
-      @sub_part.status = "not_started" if stage_secure_params[:quality_status].present? && stage_secure_params[:quality_status] == "approved"
+      if  stage_secure_params[:quality_status] == 'approved' && stage_secure_params[:next_stage].present?
+        @sub_part.quality_control = "qc_pending"
+        @sub_part.stage = stage_secure_params[:next_stage]
+        @sub_part.status = "not_started"
+      elsif stage_secure_params[:quality_status] == 'approved' && stage_secure_params[:next_stage].nil?
+        @sub_part.quality_control = "approved"
+      elsif stage_secure_params[:quality_status] == 'rejected'
+        @sub_part.quality_control = "rejected"
+        @sub_part.status = "not_started"
+      end
     else
       render json: { success: false, notice: 'Error updating stage.', errors: ['Status should be completd'] }, status: :unprocessable_entity and return
     end
